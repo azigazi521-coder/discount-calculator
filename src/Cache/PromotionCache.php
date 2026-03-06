@@ -20,8 +20,9 @@ class PromotionCache
     {
         return $this->cache->get("find-valid-for-product-{$product->getId()}", function (ItemInterface $item)
         use ($product, $requestDate) {
-            var_dump('miss');
+
             $item->expiresAfter(60);
+            
             return $this->repository->findValidForProduct(
                 $product,
                 date_create_immutable($requestDate)

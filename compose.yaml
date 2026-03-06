@@ -16,3 +16,7 @@ services:
         environment:
             - PMA_HOST=database
             - MYSQL_ROOT_PASSWORD=password
+    redis: 
+        image: redis:7.0.0
+        ports:
+            - '6379:6379'
