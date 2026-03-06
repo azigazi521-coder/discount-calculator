@@ -1,0 +1,18 @@
+services:
+    database:
+        image: 'mysql:8.0'
+        volumes:
+            - './mysql:/var/lib/mysql'
+        environment:
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: main
+        ports:
+            - '3306:3306'
+    phpmyadmin:
+        image: phpmyadmin:latest
+        restart: always
+        ports:
+            - '8080:80'
+        environment:
+            - PMA_HOST=database
+            - MYSQL_ROOT_PASSWORD=password

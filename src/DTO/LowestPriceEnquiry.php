@@ -1,0 +1,117 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\DTO;
+
+use App\Entity\Product;
+use Symfony\Component\Serializer\Annotation\Ignore;
+
+class LowestPriceEnquiry implements PriceEnquiryInterface
+{
+    #[Ignore]
+    private ?Product $product = null;
+    private ?int $quantity = null;
+    private ?string $requestLocation = null;
+    private ?string $voucherCode = null;
+    private ?string $requestDate = null;
+    private ?int $price = null;
+    private ?int $discountedPrice = null;
+    private ?int $promotionId = null;
+    private ?string $promotionName = null;
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?Product $product): void
+    {
+        $this->product = $product;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(?int $quantity): void
+    {
+        $this->quantity = $quantity;
+    }
+
+    public function getRequestLocation(): ?string
+    {
+        return $this->requestLocation;
+    }
+
+    public function setRequestLocation(?string $requestLocation): void
+    {
+        $this->requestLocation = $requestLocation;
+    }
+
+    public function getVoucherCode(): ?string
+    {
+        return $this->voucherCode;
+    }
+
+    public function setVoucherCode(?string $voucherCode): void
+    {
+        $this->voucherCode = $voucherCode;
+    }
+
+    public function getRequestDate(): ?string
+    {
+        return $this->requestDate;
+    }
+
+    public function setRequestDate(?string $requestDate): void
+    {
+        $this->requestDate = $requestDate;
+    }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?int $price): void
+    {
+        $this->price = $price;
+    }
+
+    public function getDiscountedPrice(): ?int
+    {
+        return $this->discountedPrice;
+    }
+
+    public function setDiscountedPrice(?int $discountedPrice): void
+    {
+        $this->discountedPrice = $discountedPrice;
+    }
+
+    public function getPromotionId(): ?int
+    {
+        return $this->promotionId;
+    }
+
+    public function setPromotionId(?int $promotionId): void
+    {
+        $this->promotionId = $promotionId;
+    }
+
+    public function getPromotionName(): ?string
+    {
+        return $this->promotionName;
+    }
+
+    public function setPromotionName(?string $promotionName): void
+    {
+        $this->promotionName = $promotionName;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return get_object_vars($this);
+    }
+}
