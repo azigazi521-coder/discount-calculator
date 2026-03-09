@@ -15,6 +15,7 @@ use App\Filter\PriceFilterInterface;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Cache\PromotionCache;
+use JsonException;
 
 class ProductsController extends AbstractController
 {
@@ -32,13 +33,8 @@ class ProductsController extends AbstractController
         PromotionCache $promotionCache
     ): Response {
 
-        if ($request->headers->has('force_fail')) {
-            $status = (int)$request->headers->get('force_fail');
-            return new JsonResponse(
-                ["error" => "Forced failure for testing purposes"],
-                $status  >= 100 && $status <= 599 ? $status : 500
-            );
-        }
+        throw new JsonException('aaa');
+
         /** @var LowestPriceEnquiry $lowestPriceEnquiry */
         $lowestPriceEnquiry = $dtoSerializer->deserialize(
             $request->getContent(),
@@ -46,7 +42,7 @@ class ProductsController extends AbstractController
             'json'
         );
 
-        $product = $this->repository->find($id);
+        $product = $this->repository->findOrFail($id);
 
         $lowestPriceEnquiry->setProduct($product);
 
