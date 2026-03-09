@@ -8,7 +8,6 @@ use App\Event\AfterDTOCreatedEvent;
 use App\Service\ServiceException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use App\Service\ServiceExceptionData;
 use App\Service\ValidationExceptionData;
 
 class DTOSubscriber implements EventSubscriberInterface
@@ -38,6 +37,6 @@ class DTOSubscriber implements EventSubscriberInterface
 
     public function testMethod(AfterDTOCreatedEvent $event): void
     {
-        // dd('testMethod called');
+       
     }
 }

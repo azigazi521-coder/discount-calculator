@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Service\Serializer;
 
 use App\Event\AfterDTOCreatedEvent;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;

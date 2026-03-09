@@ -13,7 +13,6 @@ class DateRangeMultiplier implements PriceModifierInterface
     public function modify(int $price, int $quantity, Promotion $promotion, PromotionEnquiryInterface $enquiry): int
     {
 
-    // dd($enquiry->getRequestDate(), $promotion->getCriteria()['from'], $promotion->getCriteria()['to']);
         /** @var LowestPriceEnquiry $enquiry */
         $requestDate = date_create($enquiry->getRequestDate());
         $from = date_create($promotion->getCriteria()['from']);

@@ -12,21 +12,29 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        // 1. Tworzymy 3 Produkty
         $products = [];
         for ($i = 1; $i <= 3; $i++) {
             $product = new Product();
-            $product->setPrice($i * 100); // 100, 200, 300
+            $product->setPrice($i * 100);
             $manager->persist($product);
             $products[] = $product;
         }
 
-        // 2. Tworzymy 3 Promocje
         $promotions = [];
+        $date = new \DateTime();
+
         $promoData = [
-            ['Wyprzedaż', 'date_rate_multiplier', 0.5, ["to" => "2026-03-31", "from" => "2026-03-01"]],
-            ['Black Friday', 'fixed_price_voucher', 50, ['code' => 'OU812']],
-            ['Kod Rabatowy', 'fixed_price_voucher', 200, ['code' => 'OU813']]
+            [
+                'Wyprzedaż',
+                'date_range_multiplier',
+                0.5,
+                [
+                    "from" => $date->format('Y-m-d'),
+                    "to" => $date->modify('+15 days')->format('Y-m-d')
+                ]
+            ],
+            ['Kod Rabatowy', 'fixed_price_voucher', 100, ['code' => 'OU812']],
+            ['Black Friday', 'even_items_multiplier', 0.5, ['minimum_quantity' => 2]]
         ];
 
         foreach ($promoData as $data) {
@@ -39,24 +47,25 @@ class AppFixtures extends Fixture
             $promotions[] = $promotion;
         }
 
-        // 3. Łączymy je w tabeli ProductPromotion
         for ($i = 0; $i < 3; $i++) {
             $pp = new ProductPromotion();
-            $pp->setProduct($products[$i]);     // Powiązanie z obiektem Product
-            $pp->setPromotion($promotions[$i]); // Powiązanie z obiektem Promotion
+            $pp->setProduct($products[$i]);
+            $pp->setPromotion($promotions[$i]);
             $pp->setValidTo(new \DateTime('+30 days'));
             $manager->persist($pp);
         }
 
-        // DODATKOWA PROMOCJA DLA PIERWSZEGO PRODUKTU
-        // Teraz produkt nr 1 (index 0) będzie miał przypisane promocje nr 1 i nr 2
         $extraPromotion = new ProductPromotion();
-        $extraPromotion->setProduct($products[0]);      // Pierwszy produkt
-        $extraPromotion->setPromotion($promotions[1]);   // Druga promocja (np. Black Friday)
+        $extraPromotion->setProduct($products[0]);
+        $extraPromotion->setPromotion($promotions[1]);
         $extraPromotion->setValidTo(new \DateTime('+15 days'));
         $manager->persist($extraPromotion);
 
-        // Zapisujemy wszystko do bazy jednym "flushem"
+        $extraPromotion = new ProductPromotion();
+        $extraPromotion->setProduct($products[0]);
+        $extraPromotion->setPromotion($promotions[2]);
+        $extraPromotion->setValidTo(new \DateTime('+15 days'));
+        $manager->persist($extraPromotion);
 
         $manager->flush();
     }

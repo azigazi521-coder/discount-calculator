@@ -67,7 +67,6 @@ class Product
     public function removeProductPromotion(ProductPromotion $productPromotion): static
     {
         if ($this->productPromotions->removeElement($productPromotion)) {
-            // set the owning side to null (unless already changed)
             if ($productPromotion->getProduct() === $this) {
                 $productPromotion->setProduct(null);
             }

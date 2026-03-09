@@ -13,9 +13,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use App\DTO\LowestPriceEnquiry;
 use App\Filter\PriceFilterInterface;
 use App\Repository\ProductRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Cache\PromotionCache;
-use JsonException;
 
 class ProductsController extends AbstractController
 {
@@ -32,8 +30,6 @@ class ProductsController extends AbstractController
         PriceFilterInterface $promotionsFilter,
         PromotionCache $promotionCache
     ): Response {
-
-        throw new JsonException('aaa');
 
         /** @var LowestPriceEnquiry $lowestPriceEnquiry */
         $lowestPriceEnquiry = $dtoSerializer->deserialize(
@@ -55,7 +51,7 @@ class ProductsController extends AbstractController
             'json'
         );
 
-        return new Response($responseContent, Response::HTTP_OK, ['Content-Type' => 'application/json']);
+        return new JsonResponse(data: $responseContent, status: Response::HTTP_OK, json: true);
     }
 
     #[Route('/products/{id}/promotions', name: 'promotions', methods: 'GET')]
