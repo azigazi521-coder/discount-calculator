@@ -1,4 +1,12 @@
 services:
+    # php:
+    #     image: 'php:8.5-apache'
+    #     ports:
+    #         - '80:80'
+    #     volumes:
+    #         - '.:/var/www/html'
+    #     depends_on:
+    #         - database
     database:
         image: 'mysql:8.0'
         volumes:

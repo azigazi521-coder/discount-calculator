@@ -1,16 +1,24 @@
 # Symfony App - Setup Guide
 
-Projekt oparty na frameworku Symfony, wykorzystujący Docker Compose do obsługi infrastruktury.
+Projekt do obliczania zniżek w sklepie internetowym, oparty na frameworku Symfony. Wykorzystujący Docker Compose do obsługi infrastruktury.
+
+## 📋 Wymagania systemowe
+
+Zanim zaczniesz, upewnij się, że masz zainstalowane:
+*   **Docker** & **Docker Compose** (wersja v2 lub nowsza)
+*   **PHP 8.1+**
+*   **Composer**
+*   **Git**
 
 ## 🚀 Szybki start
 
-1.  **Pobranie najnowszych zmian:**
-    git pull origin main
+1.  **Pobranie repo:**
+    git clone https://github.com/azigazi521-coder/discount-generator.git .
 
 2.    **Przygotowanie pliku środowiskowego:**
     cp .env.dev .env
 
-    **Upewnij się, że Twój plik `.env.local` posiada poprawne dane dostępowe:**
+    **Upewnij się, że Twój plik .env zawiera poprawne dane dostępowe:**
     DATABASE_URL=mysql://127.0.0.1:3306/main?sslmode=disable&charset=utf8mb4&serverVersion=8.0.45-1.el9
     REDIS_URL="redis://127.0.0.1:6379"
 
@@ -20,11 +28,33 @@ Projekt oparty na frameworku Symfony, wykorzystujący Docker Compose do obsługi
 4.  **Instalacja zależności PHP:**
     composer install
 
-5.  **Aktualizacja bazy danych:**
+5.  **Wykonanie migracji:**
     php bin/console doctrine:migrations:migrate --no-interaction
 
-## 🛠 Usługi i porty
+6.  **Wypełnienie bazy danych:**
+    php bin/console app:reset-db
 
+7.  **Uruchomienie serwera:**
+    php bin/console server:start
+
+8.  **Endpointy w pliku postmana:**
+    Symfony6-microservice.postman_collection.json 
+    **np url:**
+    http://localhost:8000/products/1/lowest-price
+    **dane (Body - raw)**
+    {
+    "quantity": 5,
+    "request_location": "UK",
+    "voucher_code": "OU812",
+    "request_date": "2026-03-12",
+    "product_id": 1,
+    "price": 100,
+    "discounted_price": 88,
+    "promotion_id": 3,
+    "promotion_name": "Spring Sale"
+    }
+
+## 🛠 Usługi i porty
 
 | Usługa | Adres / Port |
 | :--- | :--- |
