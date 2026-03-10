@@ -55,5 +55,12 @@ class ProductsController extends AbstractController
     }
 
     #[Route('/products/{id}/promotions', name: 'promotions', methods: 'GET')]
-    public function promotions() {}
+    public function promotions() {
+    }
+
+    #[Route('/', name: 'test', methods: 'GET')]
+    public function test(): Response
+    {
+        return $this->render('test.html.twig');
+    }
 }

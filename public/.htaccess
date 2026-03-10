@@ -1,0 +1,18 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # 1. Przekieruj zapytania do index.php, jeśli plik/folder nie istnieje fizycznie
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ index.php [QSA,L]
+
+    # 2. Ustawienia dla Authorization Header (ważne dla API/JWT)
+    RewriteCond %{HTTP:Authorization} .+
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+    <IfModule mod_alias.c>
+        # Fallback, gdyby mod_rewrite był wyłączony
+        RedirectMatch 302 ^/$ /index.php/
+    </IfModule>
+</IfModule>

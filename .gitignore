@@ -16,3 +16,4 @@
 
 mysql/
 .env
+.vscode/

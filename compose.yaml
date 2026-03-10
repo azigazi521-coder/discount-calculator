@@ -1,13 +1,20 @@
+name: symfony6-discount-calculator
 services:
-    # php:
-    #     image: 'php:8.5-apache'
-    #     ports:
-    #         - '80:80'
-    #     volumes:
-    #         - '.:/var/www/html'
-    #     depends_on:
-    #         - database
+    web:
+        container_name: web
+        build:
+            context: ./docker
+            dockerfile: Dockerfile
+        ports:
+            - '8000:80'
+        volumes:
+            - '.:/var/www/html'
+            - './docker/my_project.conf:/etc/apache2/sites-enabled/my_project.conf'
+            - './docker/php.ini:/usr/local/etc/php/conf.d/custom.ini'
+        depends_on:
+            - database
     database:
+        container_name: mysql
         image: 'mysql:8.0'
         volumes:
             - './mysql:/var/lib/mysql'
@@ -17,6 +24,7 @@ services:
         ports:
             - '3306:3306'
     phpmyadmin:
+        container_name: phpmyadmin
         image: phpmyadmin:latest
         restart: always
         ports:
@@ -26,6 +34,7 @@ services:
             - ALLOW_NO_PASSWORD=true
             - PMA_USER=root
     redis: 
+        container_name: redis
         image: redis:7.0.0
         ports:
             - '6379:6379'
