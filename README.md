@@ -9,7 +9,7 @@ Wymagania:
 *   **Git**
 
 1.  **Pobranie repo:**
-    git clone https://github.com/azigazi521-coder/discount-generator.git .
+    git clone https://github.com/azigazi521-coder/discount-generator.git
     cd discount-generator
 
 2.    **Przygotowanie pliku środowiskowego:**
